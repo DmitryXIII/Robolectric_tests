@@ -26,11 +26,19 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
         setCountText(count)
         decrementButton.setOnClickListener { presenter.onDecrement() }
         incrementButton.setOnClickListener { presenter.onIncrement() }
-        presenter.onAttach(this)
+        attachToPresenter()
     }
 
     override fun setCount(count: Int) {
         setCountText(count)
+    }
+
+    override fun attachToPresenter() {
+        presenter.onAttach(this)
+    }
+
+    override fun detachFromPresenter() {
+        presenter.onDetach()
     }
 
     private fun setCountText(count: Int) {
@@ -50,7 +58,7 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
     }
 
     override fun onDestroy() {
-        presenter.onDetach()
+        detachFromPresenter()
         super.onDestroy()
     }
 }

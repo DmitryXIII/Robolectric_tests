@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         }
         setQueryListener()
         setRecyclerView()
-        presenter.onAttach(this)
+        attachToPresenter()
     }
 
     private fun setRecyclerView() {
@@ -98,12 +98,20 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         }
     }
 
+    override fun attachToPresenter() {
+        presenter.onAttach(this)
+    }
+
+    override fun detachFromPresenter() {
+        presenter.onDetach()
+    }
+
     companion object {
         const val BASE_URL = "https://api.github.com"
     }
 
     override fun onDestroy() {
-        presenter.onDetach()
+        detachFromPresenter()
         super.onDestroy()
     }
 }
