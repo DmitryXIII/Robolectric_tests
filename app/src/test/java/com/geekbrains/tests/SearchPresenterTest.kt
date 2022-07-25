@@ -35,11 +35,6 @@ class SearchPresenterTest {
         presenter.onAttach(viewContract)
     }
 
-    @After
-    fun detachViewContract() {
-        presenter.onDetach()
-    }
-
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
     fun searchGitHub_Test() {
         val searchQuery = "some query"
@@ -155,5 +150,12 @@ class SearchPresenterTest {
 
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun onDetachView_Test() {
+        presenter.onDetach()
+        presenter.handleGitHubError()
+        verify(viewContract, times(0)).displayError()
     }
 }

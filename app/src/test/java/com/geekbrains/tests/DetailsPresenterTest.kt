@@ -31,8 +31,10 @@ class DetailsPresenterTest {
         verify(view, times(1)).setCount(count - 1)
     }
 
-    @After
-    fun detachView() {
+    @Test
+    fun onDetachView_Test() {
         presenter.onDetach()
+        presenter.setCounter(5)
+        verify(view, times(0)).setCount(count + 1)
     }
 }
